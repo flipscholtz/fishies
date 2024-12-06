@@ -13,7 +13,7 @@ body {
     position: relative;
     width: 100%;
     height: 100%;
-    background: url('https://i.imgur.com/2jwxD9M.png') no-repeat center/cover; /* Ocean background */
+    background: url('./ocean.jpg') no-repeat center/cover; /* Ocean background */
     overflow: hidden;
 }
 
@@ -22,7 +22,7 @@ body {
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 20px;
+    font-size: 45px;
     color: white;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
     z-index: 10;
@@ -30,18 +30,31 @@ body {
 
 .fish {
     position: absolute;
-    width: 50px;
-    height: 50px;
-    background: url('https://i.imgur.com/Uj7JQAv.png') no-repeat center/contain; /* Fish image */
-    display: none;
+    display: block;
+    width: 100px;
+    height: 100px;
+    background: url('./fish.jpeg') no-repeat center/contain;
+    visibility: hidden;
+    opacity: 0;
     z-index: 5;
+    color: transparent; /* Hide the letter initially */
+    font-size: 75px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 100px; /* Centers the letter inside the fish */
+    transition: all 0.5s ease;
+    color: #FF007F
 }
 
 .fish.revealed {
+    visibility: visible;
+    opacity: 1;
     display: block;
+    background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent overlay */
+    background-blend-mode: lighten; /* Lighten the fish image */
+    color: #FF007F; /* Make the letter black and prominent */
     animation: swim 1s ease-in-out forwards;
 }
-
 @keyframes swim {
     0% { transform: scale(0); opacity: 0; }
     100% { transform: scale(1); opacity: 1; }

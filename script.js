@@ -11,7 +11,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Add touch event listener
     game.addEventListener('touchstart', (e) => {
+        console.log("CLOCK");
         const target = e.target;
+
+        console.log("TARGET", target);
+        console.log("Class list", target.classList);
 
         if (target.classList.contains('fish') && !target.classList.contains('revealed')) {
             target.classList.add('revealed');
