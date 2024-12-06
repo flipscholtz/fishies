@@ -1,35 +1,62 @@
+function generateUniquePositions(numFish, gameWidth, gameHeight) {
+    const positions = [];
+    const margin = 10; // Minimum distance between fish (in percentage terms)
+
+    // Create a grid of possible positions with the specified margin
+    for (let i = margin; i < 100 - margin; i += margin) {
+        for (let j = margin; j < 100 - margin; j += margin) {
+            positions.push({ x: (i / 100) * gameWidth, y: (j / 100) * gameHeight });
+        }
+    }
+
+    // Shuffle the positions randomly
+    positions.sort(() => Math.random() - 0.5);
+
+    // Return the first `numFish` positions
+    return positions.slice(0, numFish);
+}
+
+// Use this function to set the initial positions of the fish
+function setInitialPositions(fishes) {
+    const gameWidth = game.clientWidth;
+    const gameHeight = game.clientHeight;
+    const positions = generateUniquePositions(fishes.length, gameWidth, gameHeight);
+
+    fishes.forEach((fish, index) => {
+        const position = positions[index];
+        fish.style.top = `${position.y}px`;
+        fish.style.left = `${position.x}px`;
+    });
+}
+
+
+
 document.addEventListener('DOMContentLoaded', () => {
     const fishes = document.querySelectorAll('.fish');
     const game = document.getElementById('game');
     let foundCount = 0;
 
     // Randomly position fish
-    fishes.forEach(fish => {
-        fish.style.top = `${Math.random() * 80 + 10}%`;
-        fish.style.left = `${Math.random() * 80 + 10}%`;
-    });
+    setInitialPositions(fishes);
 
-    // Add touch event listener
-    game.addEventListener('touchstart', (e) => {
-        console.log("CLOCK");
-        const target = e.target;
-
-        console.log("TARGET", target);
-        console.log("Class list", target.classList);
-
-        if (target.classList.contains('fish') && !target.classList.contains('revealed')) {
-            target.classList.add('revealed');
-            const letter = target.getAttribute('data-letter');
+    fishes.forEach((fish) => {
+        console.log("REGISTERING FISH");
+        fish.addEventListener("pointerdown", (e) => {
+            console.log("FISH POINTERDOWN");
+            if (!fish.classList.contains("revealed")) {
+                fish.classList.add('revealed');
+            const letter = fish.getAttribute('data-letter');
 
             // Add the letter to the message
-            target.innerText = letter;
+            fish.innerText = letter;
             foundCount++;
 
             // Check if the game is complete
             if (foundCount === fishes.length) {
                 showEnding();
             }
-        }
+            }
+        });
     });
 
     // Show the ending
