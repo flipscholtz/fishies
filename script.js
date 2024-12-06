@@ -1,9 +1,9 @@
 function generateUniquePositions(numFish, gameWidth, gameHeight) {
     const positions = [];
-    const margin = 10; // Minimum distance between fish (in percentage terms)
+    const margin = 15; // Minimum distance between fish (in percentage terms)
 
     // Create a grid of possible positions with the specified margin
-    for (let i = margin; i < 100 - margin; i += margin) {
+    for (let i = 40; i < 100 - margin; i += margin) {
         for (let j = margin; j < 100 - margin; j += margin) {
             positions.push({ x: (i / 100) * gameWidth, y: (j / 100) * gameHeight });
         }
